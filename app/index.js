@@ -1,5 +1,5 @@
 const electron = require('electron');
-const { app, BrowserWindow } = electron;
+const { app, BrowserWindow, session } = electron;
 const electronReload = require('electron-reload');
 const electronOauth2 = require('electron-oauth2');
 require('dotenv').config();
@@ -26,12 +26,28 @@ app.on('ready', () => {
             nodeIntegration: false
         }
     };
-    const options = {};
 
-    const myApiOauth = electronOauth2(config, windowParams);
+    session.defaultSession.cookies.get({ name: 'token' }, (error, cookies) => {
+        if (!cookies[0]) {
+            const options = {};
 
-    myApiOauth.getAccessToken(options)
-        .then(token => {
-            console.log('token: ', token);
-        });
+            const myApiOauth = electronOauth2(config, windowParams);
+
+            myApiOauth.getAccessToken(options)
+                .then(token => {
+                    console.log('token: ', token.access_token);
+
+                    session.defaultSession.cookies.set({ url: 'http://localhost', name: 'token', value: token.access_token, domain: 'localhost', expirationDate: 9999999999999 }, (error) => {
+                        if (error) {
+                            console.log(error);
+                        }
+
+                        session.defaultSession.cookies.get({ name: 'token' }, (error, cookies) => {
+                            console.log(error, cookies)
+                        })
+                    });
+                });
+        }
+    })
+
 });
