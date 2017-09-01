@@ -1,0 +1,22 @@
+{
+  "name": "gitlabtrakissues",
+  "description": "gitlabtrakissues",
+  "authors": [
+    "Fernando Derkoski <brilvio@gmail.com>"
+  ],
+  "license": "MIT",
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "client/app/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.5.8",
+    "satellizer": "~0.15.4"
+  }
+}

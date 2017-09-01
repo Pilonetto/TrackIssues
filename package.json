@@ -1,0 +1,28 @@
+{
+  "name": "gitlabelectron",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brilvio/gitLabElectron.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brilvio/gitLabElectron/issues"
+  },
+  "homepage": "https://github.com/brilvio/gitLabElectron#readme",
+  "devDependencies": {
+    "devtron": "^1.4.0",
+    "electron-reload": "^1.2.1"
+  },
+  "dependencies": {
+    "dotenv": "^4.0.0",
+    "electron": "^1.7.5",
+    "electron-oauth2": "^3.0.0"
+  }
+}
