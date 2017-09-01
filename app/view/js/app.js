@@ -1,22 +1,51 @@
-angular.module('MyApp', ['satellizer'])
-  .config(function ($authProvider) {
+const { ipcRenderer } = require('electron');
+angular
+  .module('app', [
+    'ui.router',
+    'ngMaterial',
+    'ngMessages',
+    'material.svgAssetsCache'
+  ])
+  .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider,
+    $urlRouterProvider) {
+    $stateProvider
+      /* .state('all-issues', {
+         url: '/all-issues',
+         templateUrl: 'views/all-issues.html',
+         controller: 'AllIssuesController'
+       })*/
+      .state('forbidden', {
+        url: '/forbidden',
+        templateUrl: 'views/forbidden.html',
+      })
+      .state('login-logout', {
+        url: '/login-logout',
+        templateUrl: 'views/login-logout.html',
+        controller: 'AuthController'
+      })
+      .state('my-issues', {
+        url: '/my-issues',
+        templateUrl: 'views/my-issues.html',
+        controller: 'MyIssuesController'
+      });
+    /*.state('sign-up', {
+      url: '/sign-up',
+      templateUrl: 'views/sign-up-form.html',
+      controller: 'SignUpController',
+    })
+    .state('sign-up-success', {
+      url: '/sign-up/success',
+      templateUrl: 'views/sign-up-success.html'
+    });*/
+    $urlRouterProvider.otherwise('login-logout');
+  }])
+  .run(['$rootScope', '$state', function ($rootScope, $state) {
 
-    // No additional setup required for Twitter
-
-    $authProvider.oauth2({
-      name: 'gitlab',
-      url: 'api/auth/gitlab',
-      clientId: '911d1f88335af16b4139a374ddc6543f75a1b00558387104b749f64a7908516d',
-      responseType: 'code',
-      redirectUri: 'http://localhost:3000',
-      authorizationEndpoint: 'http://gitlab.com/oauth/authorize',
+    $rootScope.$on('$stateChangeStart', function (event, next) {
+      // redirect to login page if not logged in
+      if (next.authenticate && !$rootScope.currentUser) {
+        event.preventDefault(); //prevent current page from loading
+        $state.go('forbidden');
+      }
     });
-
-  }).controller('LoginCtrl', function ($scope, $auth) {
-
-    $scope.authenticate = function (provider) {
-      console.log('asdasdasd');
-      $auth.authenticate(provider);
-    };
-
-  });
+  }]);

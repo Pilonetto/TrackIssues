@@ -1,0 +1,19 @@
+<md-list>
+  <md-list-item class="md-3-line" ng-repeat="r in games.slice().reverse()" style="padding: 0 10px">
+    <!--    <img ng-src="../kamiicon.png" class="md-avatar" alt="KamiVS" style="width: 100px; height:75px; margin-right: 0px; margin-top: 0px"> -->
+    <div class="md-list-item-text">
+      <h1 ng-style="r.status ? {color:'green'}:{color:'red'}"> Rating - {{r.rating}} ({{getRating($last,$first,r,$index,games.slice().reverse())}}) | Account Rating - {{r.accountRating}}
+        ({{getAccountRating($last,$first,r,$index,games.slice().reverse())}}) | {{r.comments}}</p>
+        <p>{{r.date | date:"short"}} | {{r.champion.name}}</p>
+        <p>{{r.player.username}}</p>
+    </div>
+    <md-divider ng-if="!$last"></md-divider>
+  </md-list-item>
+</md-list>
+<!--<article ng-repeat="r in games.slice().reverse()">
+    <header>
+      <h1 ng-style="r.status ? {color:'green'}:{color:'red'}">{{r.date | date:"short"}} | {{r.champion.name}}</h1>
+      <h2>{{r.player.username}}</h2>
+      <h2>{{r.status ? 'Win':'Loss'}} - Rating - {{r.rating}} - Account Rating - {{r.accountRating}} - {{r.comments}}</h2>
+    </header>
+  </article>-->
