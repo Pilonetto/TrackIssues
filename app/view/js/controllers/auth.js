@@ -4,15 +4,17 @@ angular
     function ($scope, AuthService, $state, $rootScope) {
       $scope.currentNavItem = 'login-logout';
 
-      $scope.login = function () {
+      $scope.login = () => {
         AuthService.login()
           .then((res) => {
-            $rootScope.currentUser = {};
-            $rootScope.currentUser.token = res.access_token;
-            $state.go('my-issues');
+            if (!res.error) {
+              $rootScope.currentUser = res.currentUser;
+              $rootScope.urlApi = res.urlApi;
+              $state.go('my-issues');
+            }
           });
       };
-      $scope.logout = function () {
+      $scope.logout = () => {
         AuthService.logout()
           .then(function () {
             $rootScope.currentUser = null;
