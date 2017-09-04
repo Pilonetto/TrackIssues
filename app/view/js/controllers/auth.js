@@ -2,7 +2,7 @@ angular
   .module('app')
   .controller('AuthController', ['$scope', 'AuthService', '$state', '$rootScope',
     function ($scope, AuthService, $state, $rootScope) {
-      $scope.currentNavItem = 'login-logout';
+      $rootScope.currentNavItem = 'login-logout';
 
       $scope.login = () => {
         AuthService.login()

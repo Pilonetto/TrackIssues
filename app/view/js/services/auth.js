@@ -9,13 +9,13 @@ angular
           ipcRenderer.send('get:urlApi', '');
           const currentUser = args;
           ipcRenderer.on('get:urlApi', (e, args) => {
+            const urlApi = args;
             $http({
               method: 'GET',
-              url: `${args}user?access_token=${currentUser.access_token}`
+              url: `${urlApi}user?access_token=${currentUser.access_token}`
             }).then(function successCallback(response) {
               const { id, username, name } = response.data;
-              Object.assign(currentUser, { id, username, name });
-              console.log(currentUser);
+              Object.assign(currentUser, { id, username, name, urlApi });
               resolve({ currentUser, urlApi: args });
             }, function errorCallback(response) {
               reject({ error: response });

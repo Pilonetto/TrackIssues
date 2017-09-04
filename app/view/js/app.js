@@ -5,7 +5,7 @@ angular
     'ngMaterial',
     'ngMessages',
     'material.svgAssetsCache'
-  ])
+  ]).controller('AppCtrl', ['$scope', '$rootScope', AppCtrl])
   .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider,
     $urlRouterProvider) {
     $stateProvider
@@ -43,9 +43,16 @@ angular
 
     $rootScope.$on('$stateChangeStart', function (event, next) {
       // redirect to login page if not logged in
-      if (next.authenticate && !$rootScope.currentUser) {
+      if (!$rootScope.currentUser) {
         event.preventDefault(); //prevent current page from loading
-        $state.go('forbidden');
+        $state.go('login-logout');
       }
     });
   }]);
+
+function AppCtrl($scope, $rootScope) {
+  $rootScope.currentNavItem = 'login-logout';
+  $scope.closeWindow = () => {
+    ipcRenderer.send('window:close');
+  };
+}

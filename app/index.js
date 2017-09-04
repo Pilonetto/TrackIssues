@@ -11,7 +11,7 @@ require('electron-reload')(__dirname, {
 let mainWindow;
 
 app.on('ready', () => {
-  mainWindow = new BrowserWindow();
+  mainWindow = new BrowserWindow({ width: 660, height: 800, maximizable: false, titleBarStyle: "hidden", frame: false });
   mainWindow.loadURL(`file://${__dirname}/view/index.html`);
   const auth = new Auth();
 
@@ -29,6 +29,10 @@ app.on('ready', () => {
 
   ipcMain.on('auth:logout', (e, args) => {
     auth.logout();
+  });
+
+  ipcMain.on('window:close', (e, args) => {
+    app.quit();
   });
 
 });
