@@ -4,16 +4,17 @@ angular
     'ui.router',
     'ngMaterial',
     'ngMessages',
-    'material.svgAssetsCache'
+    'material.svgAssetsCache',
+    'btford.socket-io'
   ]).controller('AppCtrl', ['$scope', '$rootScope', AppCtrl])
   .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider,
     $urlRouterProvider) {
     $stateProvider
-      /* .state('all-issues', {
-         url: '/all-issues',
-         templateUrl: 'views/all-issues.html',
-         controller: 'AllIssuesController'
-       })*/
+      .state('all-issues', {
+        url: '/all-issues',
+        templateUrl: 'views/all-issues.html',
+        controller: 'AllIssuesController'
+      })
       .state('forbidden', {
         url: '/forbidden',
         templateUrl: 'views/forbidden.html',
@@ -48,7 +49,12 @@ angular
         $state.go('login-logout');
       }
     });
-  }]);
+  }])
+  .factory('socket', function (socketFactory) {
+    return socketFactory({
+      ioSocket: io.connect('http://192.168.1.59:3000')
+    });
+  });
 
 function AppCtrl($scope, $rootScope) {
   $rootScope.currentNavItem = 'login-logout';

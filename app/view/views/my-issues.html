@@ -1,7 +1,13 @@
+<md-input-container style="width: 90%">
+  <label>Project</label>
+  <input type="text" ng-model="search.project_name">
+</md-input-container>
 <md-list>
-  <md-list-item class="md-3-line" ng-repeat="i in myIssues" style="padding: 0 10px">
+  <md-list-item class="md-3-line" ng-repeat="i in myIssues | filter:search" style="padding: 0 10px">
     <div class="md-list-item-text">
-      <h1> Title: {{i.title}} </h1>
+      <h1>
+        <div ng-click="openIssue(i.web_url)"> Title: {{i.title}} </div>
+      </h1>
       <p>Project: {{i.project_name}}
         <div>
           <md-button class="md-raised md-primary" style="-webkit-app-region: no-drag;" ng-click="startTimer($index)">Start Timer</md-button>
